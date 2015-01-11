@@ -17,6 +17,7 @@ import datetime
 import random
 import  xlrd
 import urllib2
+import operator
 
 #marco
 HERE = os.path.dirname(__file__)
@@ -208,12 +209,29 @@ class DoubleColor(MyLottery):
         #删除不必要的数据
         return lucky_numbers
 
+    def alg3(self):
+        """
+        计算出所有的可能组合情况
+        将这些组合插入到数据库
+        初步筛选:
+        a) 去掉以前出现的中奖号码
+        b）去掉6连号、5连号、4连号的号码
+        :return:
+        """
+        def c(n, r):
+            """
+            计算从n个不同的数字中取r个不同的数字
+            """
+            return  reduce(operator.mul, range(n-r+1, n+1)) /reduce(operator.mul, range(1, r+1))
+        print c(33, 6)
+
     def do_predict(self):
         """
         双色球预测算法
         :return:
         """
-        self.alg1()
+        # self.alg1()
+        self.alg3()
         # print "幸运号码: 红球 %s 蓝球 %s" % (self.my_lucky_numbers[0:], self.my_lucky_numbers[7])
 
 def main():
